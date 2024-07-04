@@ -1,1 +1,7 @@
+#LAMMPS INPUT SCRIPT TEST 1
+
+units       metal
+dimension   3
+boundary    p p p
+atom_style  atomic
 
