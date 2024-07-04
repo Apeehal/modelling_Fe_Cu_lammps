@@ -9,8 +9,8 @@ positions = []
 for i in range(num_atoms):
     positions.append(np.random.rand(3)*system_size)
 
-with open('random_data','w') as fdata:
-    fdata.write('Random atoms - written as a test')
+with open('random.data','w') as fdata:
+    fdata.write('Random atoms - written as a test\n\n')
     fdata.write('{} atom\n'.format(num_atoms))
     fdata.write('{} atom types\n'.format(1))
 

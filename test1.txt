@@ -4,4 +4,42 @@ units       metal
 dimension   3
 boundary    p p p
 atom_style  atomic
+read_data   bcc_ferrite.data
 
+pair_style  meam
+pair_coeff  * * library.meam Fe Fe.meam Fe
+
+# Output settings for visualization in Ovito
+dump 1 all custom 100 dump*.xyz id type x y z vx vy vz
+
+# Equilibration (adjust as per your simulation needs)
+velocity all create 300 12345 mom yes rot yes dist gaussian
+fix 1 all npt temp 300 300 0.1 iso 0 0 1.0
+timestep 0.001
+thermo 100
+run 10000
+unfix 1
+
+# Tensile loading or any other dynamic simulations
+reset_timestep 0
+variable strain equal "lx/v_initial"
+variable stress equal "c_myStress[1]/vol"
+variable strainRate equal 1.0e-4
+
+fix 2 all deform 1 x erate ${strainRate} units box remap x
+fix 3 all nvt temp 300 300 0.1
+compute myStress all stress/atom NULL
+compute myStressSum all reduce sum c_myStress[1]
+variable stress equal "c_myStressSum/(vol*1.0e4)"  # Convert to GPa
+
+# Output settings for stress-strain analysis or further dynamics
+thermo_style custom step v_strain v_stress
+dump 2 all custom 100 dump*.xyz id type x y z vx vy vz c_myStress
+
+# Run simulation
+timestep 0.001
+thermo 100
+run 10000
+
+# Additional commands and post-processing
+write_restart restart.final
