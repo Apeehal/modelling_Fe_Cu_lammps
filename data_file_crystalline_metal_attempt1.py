@@ -21,7 +21,7 @@ base_atoms = np.array([[0.0,0.0,0.0],
                        [0.5,0.5,0.5]])*lattice_parameter
 
 
-system_size = 2
+system_size = 50
 
 positions = []
 for i in range(system_size):
@@ -39,10 +39,11 @@ positions = np.array(positions)
 
 unique_positions, unique_indices = np.unique(positions, axis=0, return_index=True)
 
+num_atoms = len(unique_positions)
 
 with open('bcc_ferrite.data','w') as fdata:
     fdata.write('BCC ferrite atoms - written to test crystalline metal generation\n\n')
-    fdata.write('{} atom\n'.format(unique_positions))
+    fdata.write('{} atoms\n'.format(num_atoms))
     fdata.write('{} atom types\n'.format(1))
 
     fdata.write('{} {} xlo xhi\n'.format(0.0, system_size*lattice_parameter))
@@ -50,7 +51,7 @@ with open('bcc_ferrite.data','w') as fdata:
     fdata.write('{} {} zlo zhi\n'.format(0.0, system_size*lattice_parameter))
     fdata.write('\n')
 
-    fdata.write('Atom\n\n')
+    fdata.write('Atoms\n\n')
 
     for i,pos in enumerate(unique_positions):
         fdata.write('{} 1 {} {} {}\n'.format(i+1,*pos))

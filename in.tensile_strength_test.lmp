@@ -7,7 +7,7 @@ atom_style  atomic
 read_data   bcc_ferrite.data
 
 pair_style  meam
-pair_coeff  * * library.meam Fe Fe.meam Fe
+pair_coeff  * * libraryFe.meam Fe Fe.meam Fe
 
 # Output settings for visualization in Ovito
 dump 1 all custom 100 dump*.xyz id type x y z vx vy vz

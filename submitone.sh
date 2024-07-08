@@ -1,7 +1,6 @@
 #!/bin/bash
 
 #SBATCH --job-name=my_lammps_tensile_simulation
-#SBATCH --partition=test
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=24
 #SBATCH --time=00:01:00

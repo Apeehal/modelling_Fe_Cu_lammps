@@ -1,0 +1,17 @@
+#LAMMPS INPUT SCRIPT TEST 1
+
+units       metal
+dimension   3
+boundary    p p p
+atom_style  atomic
+read_data   bcc_ferrite.data
+
+pair_style  meam
+pair_coeff  * * libraryFe.meam Fe Fe.meam Fe
+
+# Equilibration (adjust as per your simulation needs)
+timestep    0.001
+thermo      100
+dump	    1 all atom 35 dump_fe_atoms.lammpstrj
+run         10000
+
